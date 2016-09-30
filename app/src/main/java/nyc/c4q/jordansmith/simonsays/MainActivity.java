@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static nyc.c4q.jordansmith.simonsays.R.color.simonBlue;
@@ -25,18 +24,20 @@ import static nyc.c4q.jordansmith.simonsays.R.color.simonYellow;
 
 
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = "SIMONSAYS";
     Button redButton;
     Button blueButton;
     Button greenButton;
     Button yellowButton;
     TextView roundTextView;
     ArrayList<Integer> playerArray = new ArrayList<>();
-    List<Integer> simonArray = new ArrayList<>();
+    ArrayList<Integer> simonArray = new ArrayList<>();
     int round = 0;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         redButton = (Button) findViewById(R.id.redButton);
@@ -45,14 +46,11 @@ public class MainActivity extends AppCompatActivity {
         yellowButton = (Button) findViewById(R.id.yellowButton);
         roundTextView = (TextView) findViewById(R.id.score_board);
 
-
-        nextRound();
-
-
         greenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 playerArray.add(1);
+                changeColor(greenButton,simonGreen,simonLightGreen,0,300);
                 winOrLose();
 
             }
@@ -61,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 playerArray.add(2);
+                changeColor(redButton,simonRed,simonLightRed,0,300);
                 winOrLose();
 
             }
@@ -69,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 playerArray.add(3);
+                changeColor(yellowButton,simonYellow,simonLightYellow,0,300);
                 winOrLose();
 
             }
@@ -77,9 +77,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 playerArray.add(4);
+                changeColor(blueButton,simonBlue,simonLightBlue,0,300);
                 winOrLose();
             }
         });
+
+        if(savedInstanceState == null) {
+            nextRound();
+        }
+
 
 //        setClickForButton(greenButton, 1, simonGreen, simonLightGreen);
 //        setClickForButton(redButton, 2, simonRed, simonLightRed);
@@ -87,16 +93,49 @@ public class MainActivity extends AppCompatActivity {
 //        setClickForButton(blueButton, 4, simonBlue, simonLightBlue);
     }
 
-    public void setClickForButton( final Button b, final int val, final int oldColor, final int newColor){
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                playerArray.add(val);
-                changeColor(b, oldColor, newColor, 0, 500);
-                winOrLose();
-            }
-        });
+//    public void setClickForButton( final Button b, final int val, final int oldColor, final int newColor){
+//        b.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v){
+//                playerArray.add(val);
+//                changeColor(b, oldColor, newColor, 0, 300);
+//                winOrLose();
+//            }
+//        });
+//    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle state) {
+        Log.d(TAG, "onSaveInstanceState()");
+        super.onSaveInstanceState(state);
+        state.putInt("round",round);
+        state.putIntegerArrayList("simonArray",simonArray);
     }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        Log.d(TAG, "onRestoreInstanceState()");
+        super.onRestoreInstanceState(savedInstanceState);
+        simonArray = savedInstanceState.getIntegerArrayList("simonArray");
+        round = savedInstanceState.getInt("round");
+        resumeRound();
+    }
+
+    @Override
+    protected void onResume(){
+        Log.d(TAG, "onResume()");
+        super.onResume();
+        resumeRound();
+    }
+
+    @Override
+    protected void onPause(){
+        Log.d(TAG, "onPause()");
+        super.onPause();
+    }
+
+
+
 
 
     public boolean arrayChecker() {
@@ -195,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void nextRound() {
+        Log.d(TAG, "nextRound()");
         playerArray.clear();
         round++;
         String roundMessage = "Round: " + round;
@@ -216,9 +256,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void resumeRound(){
+        Log.d(TAG, "resumeRound()");
+        playerArray.clear();
+        String roundMessage = "Round: " + round;
+        roundTextView.setText(roundMessage);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), "Match the sequence!", Toast.LENGTH_SHORT).show();
+            }
+        }, 3000);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                simonArrayDisplay();
+            }
+        }, 6000);
+    }
+
+
+
+
     public void winOrLose() {
         if (playerArray.size() == simonArray.size()) {
-            Toast.makeText(getApplicationContext(), "Finished", Toast.LENGTH_SHORT).show();
             if (arrayChecker()) {
                 nextRound();
             }
