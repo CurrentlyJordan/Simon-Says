@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
     int round = 0;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +36,8 @@ public class MainActivity extends AppCompatActivity {
         yellowButton = (Button) findViewById(R.id.yellowButton);
         roundTextView = (TextView) findViewById(R.id.score_board);
 
-        
+
         nextRound();
-
-
-
 
 
         greenButton.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 playerArray.add(3);
-               winOrLose();
+                winOrLose();
 
             }
         });
@@ -75,32 +70,25 @@ public class MainActivity extends AppCompatActivity {
                 playerArray.add(4);
                 winOrLose();
             }
-        });}
+        });
+    }
 
 
-       public boolean arrayChecker() {
+    public boolean arrayChecker() {
         boolean doesArrayMatch = true;
-            for (int i = 0; i < simonArray.size(); i++) {
-                if (!playerArray.get(i).equals(simonArray.get(i))) {
-                    doesArrayMatch = false;
-                }
+        for (int i = 0; i < simonArray.size(); i++) {
+            if (!playerArray.get(i).equals(simonArray.get(i))) {
+                doesArrayMatch = false;
             }
-            if(!doesArrayMatch){
-                Toast.makeText(getApplicationContext(), "Fail!", Toast.LENGTH_SHORT).show();
-            }
-               else{
-                Toast.makeText(getApplicationContext(), "You matched the sequence!", Toast.LENGTH_SHORT).show();
-            }
-           return doesArrayMatch;
+        }
+        if (!doesArrayMatch) {
+            Toast.makeText(getApplicationContext(), "Fail!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "You matched the sequence!", Toast.LENGTH_SHORT).show();
+        }
+        return doesArrayMatch;
 
-       }
-
-
-
-
-
-
-
+    }
 
 
     public void changeColor(final Button b, int oldColor, int newColor, int start, int end) {
@@ -125,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public ArrayList<Integer> simonArrayBuilder(int round) {
         ArrayList<Integer> simonSequence = new ArrayList<Integer>();
         Random rand = new Random();
@@ -134,9 +121,9 @@ public class MainActivity extends AppCompatActivity {
             simonSequence.add(randNumb);
         }
         for (int j = 0; j < simonSequence.size(); j++) {
-            Log.d("JORDAN", String.format("%s, %s, %s", j, j*1000, simonSequence.get(j)));
+            Log.d("JORDAN", String.format("%s, %s, %s", j, j * 1000, simonSequence.get(j)));
             int start = (j) * 1000;
-            int end = ((j+1) * 1000) - 200;
+            int end = ((j + 1) * 1000) - 200;
             switch (simonSequence.get(j)) {
                 case 1:
                     changeColor(greenButton, R.color.simonGreen, R.color.simonLightGreen, start, end);
@@ -156,16 +143,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void simonArrayAdder(){
+    public void simonArrayAdder() {
         Random rand = new Random();
         int newNumber = rand.nextInt(4) + 1;
         simonArray.add(newNumber);
     }
 
-    public void simonArrayDisplay(){
+    public void simonArrayDisplay() {
         for (int i = 0; i < simonArray.size(); i++) {
             int start = (i) * 1000;
-            int end = ((i+1) * 1000) - 200;
+            int end = ((i + 1) * 1000) - 200;
             switch (simonArray.get(i)) {
                 case 1:
                     changeColor(greenButton, R.color.simonGreen, R.color.simonLightGreen, start, end);
@@ -184,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void nextRound(){
+    public void nextRound() {
         playerArray.clear();
         round++;
         String roundMessage = "Round: " + round;
@@ -206,10 +193,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void winOrLose(){
-        if(playerArray.size() == simonArray.size()){
+    public void winOrLose() {
+        if (playerArray.size() == simonArray.size()) {
             Toast.makeText(getApplicationContext(), "Finished", Toast.LENGTH_SHORT).show();
-            if(arrayChecker()){
+            if (arrayChecker()) {
                 nextRound();
             }
         }
@@ -217,10 +204,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-    }
+}
 
 
 
