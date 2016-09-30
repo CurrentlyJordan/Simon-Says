@@ -14,6 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static nyc.c4q.jordansmith.simonsays.R.color.simonBlue;
+import static nyc.c4q.jordansmith.simonsays.R.color.simonGreen;
+import static nyc.c4q.jordansmith.simonsays.R.color.simonLightBlue;
+import static nyc.c4q.jordansmith.simonsays.R.color.simonLightGreen;
+import static nyc.c4q.jordansmith.simonsays.R.color.simonLightRed;
+import static nyc.c4q.jordansmith.simonsays.R.color.simonLightYellow;
+import static nyc.c4q.jordansmith.simonsays.R.color.simonRed;
+import static nyc.c4q.jordansmith.simonsays.R.color.simonYellow;
+
 
 public class MainActivity extends AppCompatActivity {
     Button redButton;
@@ -108,8 +117,6 @@ public class MainActivity extends AppCompatActivity {
                 b.setBackgroundColor(oldColorRGB);
             }
         }, end);
-
-        // no need to return anything
     }
 
 
@@ -126,16 +133,16 @@ public class MainActivity extends AppCompatActivity {
             int end = ((j + 1) * 1000) - 200;
             switch (simonSequence.get(j)) {
                 case 1:
-                    changeColor(greenButton, R.color.simonGreen, R.color.simonLightGreen, start, end);
+                    changeColor(greenButton, simonGreen, simonLightGreen, start, end);
                     break;
                 case 2:
-                    changeColor(redButton, R.color.simonRed, R.color.simonLightRed, start, end);
+                    changeColor(redButton, simonRed, simonLightRed, start, end);
                     break;
                 case 3:
-                    changeColor(yellowButton, R.color.simonYellow, R.color.simonLightYellow, start, end);
+                    changeColor(yellowButton, simonYellow, simonLightYellow, start, end);
                     break;
                 case 4:
-                    changeColor(blueButton, R.color.simonBlue, R.color.simonLightBlue, start, end);
+                    changeColor(blueButton, simonBlue, simonLightBlue, start, end);
                     break;
             }
         }
@@ -155,16 +162,16 @@ public class MainActivity extends AppCompatActivity {
             int end = ((i + 1) * 1000) - 200;
             switch (simonArray.get(i)) {
                 case 1:
-                    changeColor(greenButton, R.color.simonGreen, R.color.simonLightGreen, start, end);
+                    changeColor(greenButton, simonGreen, simonLightGreen, start, end);
                     break;
                 case 2:
-                    changeColor(redButton, R.color.simonRed, R.color.simonLightRed, start, end);
+                    changeColor(redButton, simonRed, simonLightRed, start, end);
                     break;
                 case 3:
-                    changeColor(yellowButton, R.color.simonYellow, R.color.simonLightYellow, start, end);
+                    changeColor(yellowButton, simonYellow, simonLightYellow, start, end);
                     break;
                 case 4:
-                    changeColor(blueButton, R.color.simonBlue, R.color.simonLightBlue, start, end);
+                    changeColor(blueButton, simonBlue, simonLightBlue, start, end);
                     break;
             }
 
