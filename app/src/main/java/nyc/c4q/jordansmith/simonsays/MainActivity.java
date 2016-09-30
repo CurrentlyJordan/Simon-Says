@@ -80,6 +80,22 @@ public class MainActivity extends AppCompatActivity {
                 winOrLose();
             }
         });
+
+//        setClickForButton(greenButton, 1, simonGreen, simonLightGreen);
+//        setClickForButton(redButton, 2, simonRed, simonLightRed);
+//        setClickForButton(yellowButton, 3, simonYellow, simonLightYellow);
+//        setClickForButton(blueButton, 4, simonBlue, simonLightBlue);
+    }
+
+    public void setClickForButton( final Button b, final int val, final int oldColor, final int newColor){
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                playerArray.add(val);
+                changeColor(b, oldColor, newColor, 0, 500);
+                winOrLose();
+            }
+        });
     }
 
 

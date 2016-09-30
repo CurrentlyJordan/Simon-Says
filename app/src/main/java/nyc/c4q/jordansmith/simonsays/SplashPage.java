@@ -1,32 +1,48 @@
 package nyc.c4q.jordansmith.simonsays;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+
 /**
  * Created by jordansmith on 9/26/16.
  */
 
-public class SplashPage {
-    MainActivity main = new MainActivity();
+public class SplashPage extends AppCompatActivity {
 
-    boolean isgameGoing = true;
-    int round = 1;
-
-    public void game(){
-        while(isgameGoing){
-            main.simonArrayAdder();
-            main.simonArrayDisplay();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.splash_page);
 
 
 
-        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SplashPage.this, MainActivity.class);
+                startActivity(intent);
+            }
+        }, 3000);
+
 
     }
 
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
