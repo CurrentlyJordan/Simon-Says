@@ -1,10 +1,13 @@
 package nyc.c4q.jordansmith.simonsays;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
     Button greenButton;
     Button yellowButton;
     TextView roundTextView;
+    private MediaPlayer mpR;
+    private MediaPlayer mpG;
+    private MediaPlayer mpY;
+    private MediaPlayer mpB;
+    private MediaPlayer mpL;
     ArrayList<Integer> playerArray = new ArrayList<>();
     ArrayList<Integer> simonArray = new ArrayList<>();
     int round = 0;
@@ -45,12 +53,17 @@ public class MainActivity extends AppCompatActivity {
         greenButton = (Button) findViewById(R.id.greenButton);
         yellowButton = (Button) findViewById(R.id.yellowButton);
         roundTextView = (TextView) findViewById(R.id.score_board);
-
+        mpG = MediaPlayer.create(getApplicationContext(), R.raw.green);
+        mpR = MediaPlayer.create(getApplicationContext(), R.raw.red);
+        mpY = MediaPlayer.create(getApplicationContext(), R.raw.yellow);
+        mpB = MediaPlayer.create(getApplicationContext(), R.raw.blue);
+        mpL = MediaPlayer.create(getApplicationContext(), R.raw.youlose);
         greenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 playerArray.add(1);
-                changeColor(greenButton,simonGreen,simonLightGreen,0,300);
+                mpG.start();
+                changeColor(greenButton,simonGreen,simonLightGreen,0,300, mpG);
                 winOrLose();
 
             }
@@ -59,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 playerArray.add(2);
-                changeColor(redButton,simonRed,simonLightRed,0,300);
+                mpR.start();
+                changeColor(redButton,simonRed,simonLightRed,0,300, mpR);
                 winOrLose();
 
             }
@@ -68,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 playerArray.add(3);
-                changeColor(yellowButton,simonYellow,simonLightYellow,0,300);
+                mpY.start();
+                changeColor(yellowButton,simonYellow,simonLightYellow,0,300, mpY);
                 winOrLose();
 
             }
@@ -77,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 playerArray.add(4);
-                changeColor(blueButton,simonBlue,simonLightBlue,0,300);
+                mpB.start();
+                changeColor(blueButton,simonBlue,simonLightBlue,0,300, mpB);
                 winOrLose();
             }
         });
@@ -147,15 +163,44 @@ public class MainActivity extends AppCompatActivity {
         }
         if (!doesArrayMatch) {
             Toast.makeText(getApplicationContext(), "Fail!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Restart using menu", Toast.LENGTH_LONG).show();
+            mpL.start();
         } else {
             Toast.makeText(getApplicationContext(), "You matched the sequence!", Toast.LENGTH_SHORT).show();
         }
         return doesArrayMatch;
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.skipround:
+                nextRound();
+                break;
+            case R.id.restart:
+                Toast.makeText(this, "Good Luck", Toast.LENGTH_LONG).show();
+                restartGame();
+                break;
+            case R.id.score_board:
+                Toast.makeText(this, "High Score is ", Toast.LENGTH_LONG).show();
+            break;
 
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-    public void changeColor(final Button b, int oldColor, int newColor, int start, int end) {
+    public void restartGame(){
+        round = 0;
+        simonArray.clear();
+        nextRound();
+    }
+
+    public void changeColor(final Button b, int oldColor, int newColor, int start, int end,final MediaPlayer color) {
         // http://stackoverflow.com/a/33674062
         final int oldColorRGB = ContextCompat.getColor(getBaseContext(), oldColor);
         final int newColorRGB = ContextCompat.getColor(getBaseContext(), newColor);
@@ -164,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 b.setBackgroundColor(newColorRGB);
+                color.start();
             }
         }, start);
         new Handler().postDelayed(new Runnable() {
@@ -174,35 +220,48 @@ public class MainActivity extends AppCompatActivity {
         }, end);
     }
 
+//    public void computerSound(final MediaPlayer b, int start){
+//        new Handler().postDelayed(new Runnable(){
+//            @Override
+//            public void run() {
+//                b.start();
+//            }
+//        }, start);
+//    }
 
-    public ArrayList<Integer> simonArrayBuilder(int round) {
-        ArrayList<Integer> simonSequence = new ArrayList<Integer>();
-        Random rand = new Random();
-        for (int i = 0; i < round; i++) {
-            int randNumb = rand.nextInt(4) + 1;
-            simonSequence.add(randNumb);
-        }
-        for (int j = 0; j < simonSequence.size(); j++) {
-            Log.d("JORDAN", String.format("%s, %s, %s", j, j * 1000, simonSequence.get(j)));
-            int start = (j) * 1000;
-            int end = ((j + 1) * 1000) - 200;
-            switch (simonSequence.get(j)) {
-                case 1:
-                    changeColor(greenButton, simonGreen, simonLightGreen, start, end);
-                    break;
-                case 2:
-                    changeColor(redButton, simonRed, simonLightRed, start, end);
-                    break;
-                case 3:
-                    changeColor(yellowButton, simonYellow, simonLightYellow, start, end);
-                    break;
-                case 4:
-                    changeColor(blueButton, simonBlue, simonLightBlue, start, end);
-                    break;
-            }
-        }
-        return simonSequence;
-    }
+
+//    public ArrayList<Integer> simonArrayBuilder(int round) {
+//        ArrayList<Integer> simonSequence = new ArrayList<Integer>();
+//        Random rand = new Random();
+//        for (int i = 0; i < round; i++) {
+//            int randNumb = rand.nextInt(4) + 1;
+//            simonSequence.add(randNumb);
+//        }
+//        for (int j = 0; j < simonSequence.size(); j++) {
+//            Log.d("JORDAN", String.format("%s, %s, %s", j, j * 1000, simonSequence.get(j)));
+//            int start = (j) * 1000;
+//            int end = ((j + 1) * 1000) - 200;
+//            switch (simonSequence.get(j)) {
+//                case 1:
+//                    changeColor(greenButton, simonGreen, simonLightGreen, start, end, mpG);
+//                   // computerSound(mpG, end);
+//                    break;
+//                case 2:
+//                    changeColor(redButton, simonRed, simonLightRed, start, end, mpR);
+//                   // computerSound(mpR, end);
+//                    break;
+//                case 3:
+//                    changeColor(yellowButton, simonYellow, simonLightYellow, start, end, mpY);
+//                    //computerSound(mpY, end);
+//                    break;
+//                case 4:
+//                    changeColor(blueButton, simonBlue, simonLightBlue, start, end, mpB);
+//                    //computerSound(mpB, end);
+//                    break;
+//            }
+//        }
+//        return simonSequence;
+//    }
 
 
     public void simonArrayAdder() {
@@ -217,18 +276,26 @@ public class MainActivity extends AppCompatActivity {
             int end = ((i + 1) * 1000) - 200;
             switch (simonArray.get(i)) {
                 case 1:
-                    changeColor(greenButton, simonGreen, simonLightGreen, start, end);
+                    changeColor(greenButton, simonGreen, simonLightGreen, start, end, mpG);
+                    //mpG.start();
                     break;
                 case 2:
-                    changeColor(redButton, simonRed, simonLightRed, start, end);
+                    changeColor(redButton, simonRed, simonLightRed, start, end, mpR);
+                    //mpR.start();
                     break;
                 case 3:
-                    changeColor(yellowButton, simonYellow, simonLightYellow, start, end);
+                    changeColor(yellowButton, simonYellow, simonLightYellow, start, end, mpY);
+                    //mpY.start();
                     break;
                 case 4:
-                    changeColor(blueButton, simonBlue, simonLightBlue, start, end);
+                    changeColor(blueButton, simonBlue, simonLightBlue, start, end, mpB);
+                    //mpB.start();
                     break;
             }
+//            mpG.release();
+//            mpB.release();
+//            mpY.release();
+//            mpR.release();
 
         }
     }

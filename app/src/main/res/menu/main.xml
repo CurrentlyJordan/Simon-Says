@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/skipround"
+        android:title="@string/change_round"
+        android:icon="@android:drawable/arrow_up_float"/>
+
+
+    <item android:id="@+id/restart"
+        android:title="@string/restart_game"
+        android:icon="@android:drawable/arrow_up_float"/>
+
+    <item android:id="@+id/save_score"
+        android:title="@string/show_score"
+        android:icon="@android:drawable/arrow_up_float"/>
+
+
+
+
+
+</menu>
