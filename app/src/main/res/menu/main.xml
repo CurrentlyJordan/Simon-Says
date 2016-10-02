@@ -10,9 +10,7 @@
         android:title="@string/restart_game"
         android:icon="@android:drawable/arrow_up_float"/>
 
-    <item android:id="@+id/save_score"
-        android:title="@string/show_score"
-        android:icon="@android:drawable/arrow_up_float"/>
+
 
 
 
