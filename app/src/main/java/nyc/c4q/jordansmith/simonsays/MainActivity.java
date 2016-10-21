@@ -1,5 +1,7 @@
 package nyc.c4q.jordansmith.simonsays;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Button greenButton;
     Button yellowButton;
     TextView roundTextView;
+    TextView HiScoreTextView;
     private MediaPlayer mpR;
     private MediaPlayer mpG;
     private MediaPlayer mpY;
@@ -41,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Integer> playerArray = new ArrayList<>();
     ArrayList<Integer> simonArray = new ArrayList<>();
     int round = 0;
+    int highScore;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -53,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
         greenButton = (Button) findViewById(R.id.greenButton);
         yellowButton = (Button) findViewById(R.id.yellowButton);
         roundTextView = (TextView) findViewById(R.id.score_board);
+        HiScoreTextView = (TextView) findViewById(R.id.Hiscore_board);
+        SharedPreferences prefs = this.getSharedPreferences("myPrefsKey", Context.MODE_PRIVATE);
+        editor = prefs.edit();
+        highScore = prefs.getInt("key", 0);
+        String scoreText = "High Score: " + highScore;
+        HiScoreTextView.setText(scoreText);
         mpG = MediaPlayer.create(getApplicationContext(), R.raw.green);
         mpR = MediaPlayer.create(getApplicationContext(), R.raw.red);
         mpY = MediaPlayer.create(getApplicationContext(), R.raw.yellow);
@@ -150,6 +161,15 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        super.onStop();
+        editor.putInt("key", highScore);
+        editor.apply();
+
+    }
+
 
 
 
@@ -186,9 +206,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Good Luck", Toast.LENGTH_LONG).show();
                 restartGame();
                 break;
-            case R.id.score_board:
-                Toast.makeText(this, "High Score is ", Toast.LENGTH_LONG).show();
-            break;
 
         }
         return super.onOptionsItemSelected(item);
@@ -306,6 +323,11 @@ public class MainActivity extends AppCompatActivity {
         round++;
         String roundMessage = "Round: " + round;
         roundTextView.setText(roundMessage);
+        if (round > highScore) {
+            highScore = round;
+        }
+        String highScoreString = "High Score: " + highScore;
+        HiScoreTextView.setText(highScoreString);
         simonArrayAdder();
         new Handler().postDelayed(new Runnable() {
             @Override

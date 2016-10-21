@@ -7,58 +7,73 @@
     android:orientation="vertical"
     tools:context="nyc.c4q.jordansmith.simonsays.MainActivity">
 
-    <TextView
-        android:id="@+id/score_board"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="Round:1"
-        android:textSize="40sp"
-        android:gravity="center"
-        android:background="#000000"
-        android:textColor="#FFFFFF"
-        />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_weight="1">
+        android:layout_height="80dp">
 
-        <Button
+        <TextView
+            android:id="@+id/score_board"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/simonGreen"
-            android:id="@+id/greenButton" />
+            android:background="#000000"
+            android:text="Round:1"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp"
+            android:gravity="center"/>
 
-        <Button
+        <TextView
+            android:id="@+id/Hiscore_board"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/simonRed"
-            android:id="@+id/redButton" />
+            android:background="#000000"
+            android:text="High Score: 0"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:gravity="center"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <Button
+            android:id="@+id/greenButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/simonYellow"
+            android:background="@color/simonGreen" />
+
+        <Button
+            android:id="@+id/redButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/simonRed" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
             android:id="@+id/yellowButton"
-            />
-
-        <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/simonBlue"
-            android:id="@+id/blueButton" />
+            android:background="@color/simonYellow" />
+
+        <Button
+            android:id="@+id/blueButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/simonBlue" />
     </LinearLayout>
 
 </LinearLayout>
