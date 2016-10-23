@@ -12,6 +12,14 @@
     <color name="simonLightRed">#ff0000</color>
     <color name="simonLightYellow">#FFFF00</color>
     <color name="black">#000000</color>
+    <color name="pastelRed">#eeaab0</color>
+    <color name="pastelBlue">#aab0ee</color>
+    <color name="pastelGreen">#aaeee8</color>
+    <color name="pastelyellow">#eee8aa</color>
+    <color name="pastelDarkRed">#e16a75</color>
+    <color name="pastelDarkBlue">#6a75e1</color>
+    <color name="pastelDarkGreen">#6ae1d7</color>
+    <color name="pastelDarkYellow">#e1d76a</color>
 
 
 </resources>

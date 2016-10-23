@@ -10,6 +10,13 @@
         android:title="@string/restart_game"
         android:icon="@android:drawable/arrow_up_float"/>
 
+    <item android:id="@+id/pastel"
+        android:title="Pastel Theme"
+        android:icon="@android:drawable/arrow_up_float"/>
+    <item android:id="@+id/default_theme"
+        android:title="Default Theme"
+        android:icon="@android:drawable/arrow_up_float"/>
+
 
 
 

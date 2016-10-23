@@ -18,6 +18,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static nyc.c4q.jordansmith.simonsays.R.color.pastelBlue;
+import static nyc.c4q.jordansmith.simonsays.R.color.pastelDarkBlue;
+import static nyc.c4q.jordansmith.simonsays.R.color.pastelDarkGreen;
+import static nyc.c4q.jordansmith.simonsays.R.color.pastelDarkRed;
+import static nyc.c4q.jordansmith.simonsays.R.color.pastelDarkYellow;
+import static nyc.c4q.jordansmith.simonsays.R.color.pastelGreen;
+import static nyc.c4q.jordansmith.simonsays.R.color.pastelRed;
+import static nyc.c4q.jordansmith.simonsays.R.color.pastelyellow;
 import static nyc.c4q.jordansmith.simonsays.R.color.simonBlue;
 import static nyc.c4q.jordansmith.simonsays.R.color.simonGreen;
 import static nyc.c4q.jordansmith.simonsays.R.color.simonLightBlue;
@@ -47,10 +55,12 @@ public class MainActivity extends AppCompatActivity {
     int highScore;
     int buttonPress = -1;
     SharedPreferences.Editor editor;
+    boolean pastelColor = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        pastelColor = false;
         Log.d(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -75,7 +85,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 playerArray.add(1);
                 mpG.start();
-                changeColor(greenButton,simonGreen,simonLightGreen,0,300, mpG);
+                if(pastelColor == true) {
+                    changeColor(greenButton, pastelDarkGreen, pastelGreen, 0, 300, mpG);
+                }
+                else{
+                    changeColor(greenButton, simonGreen, simonLightGreen, 0, 300, mpG);
+                }
                 buttonPress++;
                 winOrLose();
 
@@ -86,7 +101,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 playerArray.add(2);
                 mpR.start();
-                changeColor(redButton,simonRed,simonLightRed,0,300, mpR);
+                if(pastelColor == true) {
+                    changeColor(redButton, pastelDarkRed, pastelRed, 0, 300, mpR);
+                }
+                else{
+                    changeColor(redButton, simonRed, simonLightRed, 0, 300, mpR);
+                }
                 buttonPress++;
                 winOrLose();
 
@@ -97,7 +117,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 playerArray.add(3);
                 mpY.start();
-                changeColor(yellowButton,simonYellow,simonLightYellow,0,300, mpY);
+                if(pastelColor == true) {
+                    changeColor(yellowButton,pastelDarkYellow,pastelyellow,0,300, mpY);
+                }
+                else{
+                    changeColor(yellowButton, simonYellow, simonLightYellow, 0, 300, mpY);
+                }
                 buttonPress++;
                 winOrLose();
 
@@ -108,7 +133,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 playerArray.add(4);
                 mpB.start();
-                changeColor(blueButton,simonBlue,simonLightBlue,0,300, mpB);
+                if(pastelColor == true) {
+                    changeColor(blueButton,pastelDarkBlue,pastelBlue,0,300, mpB);
+                }
+                else{
+                    changeColor(blueButton, simonBlue, simonLightBlue, 0, 300, mpB);
+                }
                 buttonPress++;
                 winOrLose();
             }
@@ -191,6 +221,20 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Good Luck", Toast.LENGTH_LONG).show();
                 restartGame();
                 break;
+            case R.id.pastel:
+                pastelColor = true;
+                greenButton.setBackgroundColor(getResources().getColor(pastelGreen));
+                blueButton.setBackgroundColor(getResources().getColor(pastelBlue));
+                redButton.setBackgroundColor(getResources().getColor(pastelRed));
+                yellowButton.setBackgroundColor(getResources().getColor(pastelyellow));
+                break;
+            case R.id.default_theme:
+                pastelColor = false;
+                greenButton.setBackgroundColor(getResources().getColor(simonGreen));
+                blueButton.setBackgroundColor(getResources().getColor(simonBlue));
+                redButton.setBackgroundColor(getResources().getColor(simonRed));
+                yellowButton.setBackgroundColor(getResources().getColor(simonYellow));
+
 
         }
         return super.onOptionsItemSelected(item);
@@ -231,29 +275,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void simonArrayDisplay() {
-        greenButton.setClickable(false);
-        redButton.setClickable(false);
-        yellowButton.setClickable(false);
-        blueButton.setClickable(false);
-        for (int i = 0; i < simonArray.size(); i++) {
-            int start = (i) * 1000;
-            int end = ((i + 1) * 1000) - 200;
-            switch (simonArray.get(i)) {
-                case 1:
-                    changeColor(greenButton, simonGreen, simonLightGreen, start, end, mpG);
-                    break;
-                case 2:
-                    changeColor(redButton, simonRed, simonLightRed, start, end, mpR);
-                    break;
-                case 3:
-                    changeColor(yellowButton, simonYellow, simonLightYellow, start, end, mpY);
-                    break;
-                case 4:
-                    changeColor(blueButton, simonBlue, simonLightBlue, start, end, mpB);
-                    break;
-            }
+//        greenButton.setClickable(false);
+//        redButton.setClickable(false);
+//        yellowButton.setClickable(false);
+//        blueButton.setClickable(false);
+        pastelColor = false;
+       if(pastelColor == false) {
+           for (int i = 0; i < simonArray.size(); i++) {
+               int start = (i) * 1000;
+               int end = ((i + 1) * 1000) - 200;
+               switch (simonArray.get(i)) {
+                   case 1:
+                       changeColor(greenButton, simonGreen, simonLightGreen, start, end, mpG);
+                       break;
+                   case 2:
+                       changeColor(redButton, simonRed, simonLightRed, start, end, mpR);
+                       break;
+                   case 3:
+                       changeColor(yellowButton, simonYellow, simonLightYellow, start, end, mpY);
+                       break;
+                   case 4:
+                       changeColor(blueButton, simonBlue, simonLightBlue, start, end, mpB);
+                       break;
+               }
 
-        }
+           }
+       }
+       if(pastelColor == true) {
+           for (int i = 0; i < simonArray.size(); i++) {
+               int start = (i) * 1000;
+               int end = ((i + 1) * 1000) - 200;
+               switch (simonArray.get(i)) {
+                   case 1:
+                       changeColor(greenButton, pastelDarkGreen, pastelGreen, start, end, mpG);
+                       break;
+                   case 2:
+                       changeColor(redButton, pastelDarkRed, pastelRed, start, end, mpR);
+                       break;
+                   case 3:
+                       changeColor(yellowButton, pastelDarkYellow, pastelyellow, start, end, mpY);
+                       break;
+                   case 4:
+                       changeColor(blueButton, pastelDarkBlue, pastelBlue, start, end, mpB);
+                       break;
+               }
+
+           }
+       }
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
